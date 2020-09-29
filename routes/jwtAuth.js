@@ -2,6 +2,7 @@ const router = require('express').Router()
 const pool = require('../db') //contains the action for us
 bcrypt = require('bcrypt')
 const jwtGenerator = require('../utils/jwtGenerator')
+const authorization = require('../middleware/authorization')
 
 //registering
 
@@ -66,7 +67,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json('Password or Email is incorrect')
     }
 
-    console.log('email=', email, 'user=' , user)
+    console.log('email=', email, 'user=', user)
 
     //3. Check if both incomming passowrd is the same as the database password
 
@@ -91,9 +92,9 @@ router.post('/login', async (req, res) => {
   }
 })
 
-router.get("/is-verify", async (req, res) => {
+router.get('/is-verify', authorization, async (req, res) => {
   try {
-
+    res.json(true)
   } catch (err) {
     console.error(err.message)
     res.status(500).send('Server Error')

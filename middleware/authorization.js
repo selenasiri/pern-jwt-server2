@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken")
-require("dotenv").config()
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 module.exports = async (req, res, next) => {
   try {
@@ -13,6 +13,7 @@ module.exports = async (req, res, next) => {
 
     req.user = payload.user
 
+    next()
   } catch (err) {
     console.error(err.message)
     return res.status(403).json('Not Authorize')
